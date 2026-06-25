@@ -1,5 +1,6 @@
 import { TopNav } from '../components/TopNav.js';
 import { api } from '../services/api.js';
+import { ConnectGithubUI, initConnectGithub } from '../components/ConnectGithub.js';
 
 export function PortfolioPreview() {
   return `
@@ -75,6 +76,15 @@ export async function initPreview() {
 
         const previewContainer = document.getElementById('live-preview-content');
         if (!previewContainer) return;
+
+        // Empty State: Connect GitHub
+        if (github.isNotConnected) {
+            previewContainer.innerHTML = ConnectGithubUI();
+            initConnectGithub(async () => {
+                await initPreview();
+            });
+            return;
+        }
 
         // Render the generated mini-portfolio HTML
         const name = user?.name || github?.username || 'Developer';

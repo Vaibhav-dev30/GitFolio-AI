@@ -123,7 +123,18 @@ export const api = {
   },
   getGithubData: async () => {
     try {
-      const username = 'Vaibhav-dev30';
+      // Fetch dynamic username from profile
+      let username = 'Vaibhav-dev30'; // fallback
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+           const { data: profile } = await supabase.from('profiles').select('github_username').eq('id', user.id).single();
+           if (profile && profile.github_username) {
+               username = profile.github_username;
+           }
+        }
+      } catch(e) { /* ignore */ }
+
       const [userRes, reposRes, eventsRes] = await Promise.all([
         fetch(`https://api.github.com/users/${username}`),
         fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`),
@@ -188,5 +199,26 @@ export const api = {
   getAnalytics: async () => {
     await delay(300);
     return mockAnalytics;
+  },
+  updateUser: async (profileData) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not logged in");
+    
+    // Check if profile exists
+    const { data: existing } = await supabase.from('profiles').select('id').eq('id', user.id).single();
+    
+    if (existing) {
+       const { error } = await supabase.from('profiles').update(profileData).eq('id', user.id);
+       if (error) throw error;
+    } else {
+       const { error } = await supabase.from('profiles').insert({ id: user.id, ...profileData });
+       if (error) throw error;
+    }
+    return true;
+  },
+  logout: async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    return true;
   }
 };

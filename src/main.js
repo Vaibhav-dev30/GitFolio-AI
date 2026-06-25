@@ -108,9 +108,18 @@ async function router() {
                        module.initAuthLogic(path === '/login');
                    });
                 } else {
-                   // Dashboard or other pages
                    if(shaderCanvas) shaderCanvas.style.opacity = '1'; // Enable shader for warm vibe
                    if(ringsBg) ringsBg.style.opacity = '0.5';
+
+                   if (path === '/dashboard') {
+                       import('./views/Dashboard.js').then(module => {
+                           if (module.initDashboard) module.initDashboard();
+                       });
+                   } else if (path === '/settings') {
+                       import('./views/Settings.js').then(module => {
+                           if (module.initSettings) module.initSettings();
+                       });
+                   }
                 }
                 
                 // Handle scrolling back to top for new pages

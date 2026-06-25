@@ -1,0 +1,55 @@
+:root {
+  /* Theme: Aurelian Edition v2 (Warm Premium Light) */
+  
+  /* Backgrounds & Surfaces */
+  --bg-primary: #fdfbf7;
+  --bg-surface: rgba(253, 251, 247, 0.7); /* Translucent cream for glassmorphism */
+  --bg-surface-lowest: #ffffff;
+  --bg-surface-low: #eff4ff;
+  --bg-secondary: #ffedd5; /* tertiary-container in original, warm */
+  
+  /* Primary Action Colors (Amber) */
+  --color-primary: #d97706; 
+  --color-primary-container: #fcd34d;
+  --color-on-primary-container: #451a03;
+  
+  /* Secondary Action Colors */
+  --color-secondary: #b45309;
+  --color-secondary-container: #fef3c7;
+  
+  /* Tertiary Action Colors */
+  --color-tertiary: #92400e;
+  --color-tertiary-container: #ffedd5;
+
+  /* Typography Colors */
+  --text-primary: #121d33;
+  --text-muted: #57534e; /* on-surface-variant */
+  
+  /* Borders */
+  --border-color: rgba(168, 162, 158, 0.3); /* outline variant equivalent */
+  --border-hover: rgba(217, 119, 6, 0.3); /* Amber outline hover */
+  
+  /* Semantic Status */
+  --color-success: #10b981; 
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+
+  /* Typography Families */
+  --font-primary: 'Inter', sans-serif; /* Body */
+  --font-secondary: 'Playfair Display', serif; /* Headings */
+  --font-mono: 'Geist', ui-monospace, SFMono-Regular, monospace; /* Labels & Code */
+  
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 12px 40px rgba(217, 119, 6, 0.15); /* Interactive glow */
+  
+  /* Border Radius */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}

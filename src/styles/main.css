@@ -1,0 +1,5 @@
+@import './variables.css';
+@import './reset.css';
+@import './global.css';
+
+/* We can import component CSS files here later, or load them via JS */

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevPortfolio AI</title>
+    
+    <!-- Tailwind CSS (approved via CDN) -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f8f9ff",
+                        "surface-dim": "#d0dbed",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container": "#e9efff",
+                        "surface-container-high": "#e4eaff",
+                        "surface-container-highest": "#dee4ff",
+                        "on-surface": "#121d33",
+                        "on-surface-variant": "#3c4659",
+                        "primary": "#d97706",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#fef3c7",
+                        "on-primary-container": "#451a03",
+                        "secondary": "#936413",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#ffdeaa",
+                        "on-secondary-container": "#311f00",
+                        "tertiary": "#6e5d12",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#fbe18a",
+                        "on-tertiary-container": "#221b00",
+                        "outline": "#6c778a",
+                        "outline-variant": "#bcc7dc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xs": "4px",
+                        "container-max": "1200px",
+                        "gutter": "24px",
+                        "lg": "32px",
+                        "md": "16px",
+                        "unit": "4px",
+                        "xl": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Playfair Display"],
+                        "label-md": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "code-sm": ["Geist"],
+                        "headline-lg": ["Playfair Display"],
+                        "headline-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "code-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- App Styles -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body class="bg-surface text-on-surface font-body-md min-h-screen relative overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+    <!-- Shader Background (From Stitch) -->
+    <canvas id="shader-canvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none transition-opacity duration-500 ease-in-out"></canvas>
+    
+    <!-- ThreeJS Rings Background -->
+    <div id="threejs-bg-container" class="fixed inset-0 w-full h-full pointer-events-none z-[-15] transition-opacity duration-500 ease-in-out"></div>
+
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -93,8 +93,68 @@ export const api = {
     return mockSkills;
   },
   getGithubData: async () => {
-    await delay(600);
-    return mockGithubData;
+    try {
+      const username = 'Vaibhav-dev30';
+      const [userRes, reposRes, eventsRes] = await Promise.all([
+        fetch(`https://api.github.com/users/${username}`),
+        fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`),
+        fetch(`https://api.github.com/users/${username}/events/public?per_page=5`)
+      ]);
+
+      const user = await userRes.json();
+      const repos = await reposRes.json();
+      const events = await eventsRes.json();
+
+      // Calculate Top Languages
+      const languageCounts = {};
+      let totalCount = 0;
+      if (Array.isArray(repos)) {
+        repos.forEach(repo => {
+          if (repo.language) {
+            languageCounts[repo.language] = (languageCounts[repo.language] || 0) + 1;
+            totalCount++;
+          }
+        });
+      }
+
+      const topLanguages = Object.entries(languageCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 4)
+        .map(([name, count]) => ({
+          name,
+          percentage: Math.round((count / totalCount) * 100)
+        }));
+
+      // Format Recent Activity
+      const recentActivity = Array.isArray(events) ? events.slice(0, 3).map(event => {
+        const date = new Date(event.created_at);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        let dateStr = diffDays > 0 ? `${diffDays} days ago` : `${diffHours} hours ago`;
+        if (diffHours === 0) dateStr = 'Just now';
+
+        return {
+          type: event.type,
+          repo: event.repo ? event.repo.name : 'Unknown',
+          date: dateStr
+        };
+      }) : [];
+
+      return {
+        username: user.login || username,
+        followers: user.followers || 0,
+        following: user.following || 0,
+        publicRepos: user.public_repos || 0,
+        contributionsLastYear: 0, // GitHub API doesn't expose this directly without GraphQL
+        topLanguages: topLanguages.length > 0 ? topLanguages : mockGithubData.topLanguages,
+        recentActivity: recentActivity.length > 0 ? recentActivity : mockGithubData.recentActivity
+      };
+    } catch (err) {
+      console.error('Failed to fetch real GitHub data, falling back to mock.', err);
+      return mockGithubData;
+    }
   },
   getAnalytics: async () => {
     await delay(300);

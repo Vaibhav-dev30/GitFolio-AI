@@ -1,4 +1,6 @@
 import { Logo } from '../components/Logo.js';
+import { supabase } from '../services/supabase.js';
+
 export function Auth(isLogin = true) {
     return `
       <style>
@@ -101,8 +103,6 @@ export function Auth(isLogin = true) {
       </div>
     `;
 }
-
-import { supabase } from '../services/supabase.js';
 
 export function initAuthLogic(isLogin) {
     const form = document.getElementById('auth-form');

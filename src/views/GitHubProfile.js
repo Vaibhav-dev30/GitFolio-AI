@@ -141,7 +141,7 @@ export async function initGitHub() {
         console.error("Failed to render GitHub view", e);
         const grid = document.getElementById('github-repos-grid');
         if (grid) {
-            grid.innerHTML = \`<div class="col-span-full py-12 text-center text-red-500 bg-red-500/10 border border-red-500/30 rounded-xl">Error: \${e.message}</div>\`;
+            grid.innerHTML = `<div class="col-span-full py-12 text-center text-red-500 bg-red-500/10 border border-red-500/30 rounded-xl">Error: ${e.message}</div>`;
         }
     }
 }

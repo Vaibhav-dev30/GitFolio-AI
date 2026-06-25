@@ -131,6 +131,10 @@ async function router() {
                        import('./views/PortfolioPreview.js').then(module => {
                            if (module.initPreview) module.initPreview();
                        });
+                   } else if (path === '/skills') {
+                       import('./views/Skills.js').then(module => {
+                           if (module.initSkills) module.initSkills();
+                       });
                    }
                 }
                 

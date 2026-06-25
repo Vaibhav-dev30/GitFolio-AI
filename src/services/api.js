@@ -1,4 +1,6 @@
 // Mock API Service for Phase 1
+import { supabase } from './supabase.js';
+
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -81,16 +83,43 @@ const mockAnalytics = {
 
 export const api = {
   getUser: async () => {
-    await delay(300);
-    return mockUser;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not logged in");
+      const { data, error } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+      if (error || !data) throw error;
+      return data;
+    } catch (err) {
+      console.warn("Using mock user", err.message);
+      await delay(300);
+      return mockUser;
+    }
   },
   getProjects: async () => {
-    await delay(500);
-    return mockProjects;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not logged in");
+      const { data, error } = await supabase.from('projects').select('*').eq('user_id', user.id);
+      if (error) throw error;
+      return data && data.length > 0 ? data : mockProjects;
+    } catch (err) {
+      console.warn("Using mock projects", err.message);
+      await delay(500);
+      return mockProjects;
+    }
   },
   getSkills: async () => {
-    await delay(400);
-    return mockSkills;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not logged in");
+      const { data, error } = await supabase.from('skills').select('*').eq('user_id', user.id);
+      if (error) throw error;
+      return data && data.length > 0 ? data : mockSkills;
+    } catch (err) {
+      console.warn("Using mock skills", err.message);
+      await delay(400);
+      return mockSkills;
+    }
   },
   getGithubData: async () => {
     try {

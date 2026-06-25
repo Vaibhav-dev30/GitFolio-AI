@@ -157,6 +157,9 @@ export async function initProjects() {
                                   <span class="w-2 h-2 rounded-full bg-${color} ${pulseClass}"></span> ${p.status || 'Live'}
                               </p>
                           </div>
+                          <button class="btn-delete-project p-1 rounded-full hover:bg-red-500/10 text-outline hover:text-red-500 transition-colors group-hover:opacity-100 md:opacity-0" data-id="${p.id}" title="Delete Project">
+                              <span class="material-symbols-outlined text-[18px]">delete</span>
+                          </button>
                       </div>
                       <p class="font-body-md text-body-md text-on-surface-variant flex-1 line-clamp-3">${p.description || ''}</p>
                       <div class="flex flex-col gap-md mt-auto">
@@ -174,6 +177,31 @@ export async function initProjects() {
                   </div>
                 `;
             }).join('');
+
+            // Attach delete listeners
+            const deleteBtns = grid.querySelectorAll('.btn-delete-project');
+            deleteBtns.forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!confirm('Are you sure you want to delete this project?')) return;
+                    
+                    const id = btn.getAttribute('data-id');
+                    const originalHtml = btn.innerHTML;
+                    
+                    try {
+                        btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span>';
+                        btn.disabled = true;
+                        await api.deleteProject(id);
+                        await renderGrid();
+                    } catch (err) {
+                        console.error(err);
+                        alert('Failed to delete project.');
+                        btn.innerHTML = originalHtml;
+                        btn.disabled = false;
+                    }
+                });
+            });
 
         } catch (e) {
             console.error("Failed to render projects", e);

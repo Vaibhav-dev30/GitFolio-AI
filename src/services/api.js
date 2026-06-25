@@ -254,13 +254,18 @@ export const api = {
             ? repo.topics 
             : (repo.language ? [repo.language] : []);
             
+        let liveUrl = repo.homepage ? repo.homepage.trim() : '';
+        if (liveUrl && !liveUrl.startsWith('http://') && !liveUrl.startsWith('https://')) {
+            liveUrl = 'https://' + liveUrl;
+        }
+
         return {
             title: repo.name.replace(/[-_]/g, ' '),
             description: repo.description || 'A deployed web application.',
             status: 'Live',
             tags: tags,
             github_url: repo.html_url,
-            live_url: repo.homepage
+            live_url: liveUrl
         };
     });
   }

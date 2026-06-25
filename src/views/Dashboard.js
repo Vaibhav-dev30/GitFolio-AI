@@ -1,4 +1,5 @@
 import { TopNav } from '../components/TopNav.js';
+import { api } from '../services/api.js';
 
 export function Dashboard() {
   return `
@@ -16,7 +17,9 @@ export function Dashboard() {
           </div>
           
           <div class="flex items-center gap-md min-w-max">
-              <img class="w-9 h-9 rounded-full border border-outline-variant shadow-sm object-cover" alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4y-TYaVN2fTpT0OUJCZ6ehy2UryKd6xIOo_fQM7e6cGIRUXcmJcxoL_gQghyQ_f4nPjdCd0EMrcN-w_HLMQuT1l27ky7nTfLRiUEaiRwpRkbvoP2C16UywTD5Y0vrui1U2ok3iYASJusY6xqR8EIO2kr1jOSTXyifJx8ifQlgVe11eKhsi8HelHdoyX_ge2UoHqgIc_y55xKFLbwHIRmHVa45a3IVjdK4HXVs9OBnv-saSmOdKXWkMGVctd-dExn1dpZn8QRfYqs"/>
+              <a href="#/settings">
+                  <img id="dash-avatar" class="w-9 h-9 rounded-full border border-outline-variant shadow-sm object-cover hover:opacity-80 transition-opacity" alt="Avatar" src="https://ui-avatars.com/api/?name=User&background=random"/>
+              </a>
           </div>
       </header>
       
@@ -28,9 +31,9 @@ export function Dashboard() {
                       <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Projects</span>
                       <span class="material-symbols-outlined text-primary">folder</span>
                   </div>
-                  <div class="font-display-lg text-display-lg text-on-surface counter" data-target="12">0</div>
+                  <div id="dash-total-projects" class="font-display-lg text-display-lg text-on-surface">...</div>
                   <div class="mt-sm font-label-md text-label-md text-primary flex items-center gap-xs">
-                      <span class="material-symbols-outlined text-[16px]">trending_up</span> +2 this month
+                      <span class="material-symbols-outlined text-[16px]">trending_up</span> All time
                   </div>
               </div>
               <div class="glass-panel interactive-glow rounded-xl p-lg animate-entrance delay-200">
@@ -38,7 +41,7 @@ export function Dashboard() {
                       <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Skills Count</span>
                       <span class="material-symbols-outlined text-secondary">bolt</span>
                   </div>
-                  <div class="font-display-lg text-display-lg text-on-surface counter" data-target="24">0</div>
+                  <div id="dash-skills-count" class="font-display-lg text-display-lg text-on-surface">...</div>
                   <div class="mt-sm font-label-md text-label-md text-outline">Verified technologies</div>
               </div>
               <div class="glass-panel interactive-glow rounded-xl p-lg animate-entrance delay-300">
@@ -46,20 +49,18 @@ export function Dashboard() {
                       <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Repositories</span>
                       <span class="material-symbols-outlined text-tertiary">code</span>
                   </div>
-                  <div class="font-display-lg text-display-lg text-on-surface counter" data-target="45">0</div>
+                  <div id="dash-repos-count" class="font-display-lg text-display-lg text-on-surface">...</div>
                   <div class="mt-sm font-label-md text-label-md text-tertiary flex items-center gap-xs">
-                      <span class="material-symbols-outlined text-[16px]">sync</span> Synced just now
+                      <span class="material-symbols-outlined text-[16px]">sync</span> Synced via GitHub
                   </div>
               </div>
               <div class="glass-panel interactive-glow rounded-xl p-lg animate-entrance delay-400">
                   <div class="flex justify-between items-start mb-md">
-                      <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Completion</span>
-                      <span class="material-symbols-outlined text-primary">star</span>
+                      <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Followers</span>
+                      <span class="material-symbols-outlined text-primary">group</span>
                   </div>
-                  <div class="font-display-lg text-display-lg text-on-surface"><span class="counter" data-target="85">0</span>%</div>
-                  <div class="w-full bg-surface-variant/50 h-1.5 rounded-full mt-sm overflow-hidden">
-                      <div class="bg-primary h-full rounded-full w-[85%]"></div>
-                  </div>
+                  <div id="dash-followers" class="font-display-lg text-display-lg text-on-surface">...</div>
+                  <div class="mt-sm font-label-md text-label-md text-outline">GitHub Network</div>
               </div>
           </section>
           
@@ -68,65 +69,19 @@ export function Dashboard() {
               <!-- Left Column: Activity & Focus -->
               <div class="lg:col-span-2 flex flex-col gap-md">
                   <div class="glass-panel interactive-glow rounded-xl p-lg flex-1 animate-entrance delay-200">
-                      <h3 class="font-headline-md text-headline-md text-on-surface mb-lg">Recent Activity</h3>
-                      <div class="space-y-md relative before:absolute before:inset-y-0 before:left-[11px] before:w-px before:bg-outline-variant/50">
-                          <div class="relative pl-xl">
-                              <div class="absolute left-0 top-1 w-[24px] h-[24px] rounded-full bg-surface border-2 border-primary flex items-center justify-center">
-                                  <div class="w-2 h-2 bg-primary rounded-full"></div>
-                              </div>
-                              <div class="font-body-md text-body-md text-on-surface">Pushed 3 commits to <span class="text-primary font-mono text-code-sm bg-primary/10 px-xs rounded">core-engine-v2</span></div>
-                              <div class="font-label-md text-label-md text-outline mt-xs">2 hours ago • Added structural typing</div>
-                          </div>
-                          <div class="relative pl-xl">
-                              <div class="absolute left-0 top-1 w-[24px] h-[24px] rounded-full bg-surface border-2 border-secondary flex items-center justify-center">
-                                  <div class="w-2 h-2 bg-secondary rounded-full"></div>
-                              </div>
-                              <div class="font-body-md text-body-md text-on-surface">Deployed to production</div>
-                              <div class="font-label-md text-label-md text-outline mt-xs">5 hours ago • Vercel deployment successful</div>
-                          </div>
-                          <div class="relative pl-xl">
-                              <div class="absolute left-0 top-1 w-[24px] h-[24px] rounded-full bg-surface border-2 border-tertiary flex items-center justify-center">
-                                  <div class="w-2 h-2 bg-tertiary rounded-full"></div>
-                              </div>
-                              <div class="font-body-md text-body-md text-on-surface">Merged PR <span class="text-tertiary font-mono text-code-sm bg-tertiary/10 px-xs rounded">#142</span></div>
-                              <div class="font-label-md text-label-md text-outline mt-xs">Yesterday • Fix auth token refresh bug</div>
-                          </div>
+                      <h3 class="font-headline-md text-headline-md text-on-surface mb-lg">Recent GitHub Activity</h3>
+                      <div id="dash-recent-activity" class="space-y-md relative before:absolute before:inset-y-0 before:left-[11px] before:w-px before:bg-outline-variant/50">
+                          <div class="text-on-surface-variant text-sm">Loading activity...</div>
                       </div>
                   </div>
               </div>
               
-              <!-- Right Column: Skills & Progress -->
+              <!-- Right Column: Tech Focus & Profile -->
               <div class="flex flex-col gap-md">
                   <div class="glass-panel interactive-glow rounded-xl p-lg animate-entrance delay-300">
-                      <h3 class="font-headline-md text-headline-md text-on-surface mb-lg">Tech Focus</h3>
-                      <div class="space-y-sm">
-                          <div>
-                              <div class="flex justify-between font-label-md text-label-md mb-xs">
-                                  <span class="text-on-surface">Frontend (React/Vue)</span>
-                                  <span class="text-primary">45%</span>
-                              </div>
-                              <div class="w-full bg-surface-variant/50 h-2 rounded-full overflow-hidden">
-                                  <div class="bg-primary h-full rounded-full" style="width: 45%"></div>
-                              </div>
-                          </div>
-                          <div>
-                              <div class="flex justify-between font-label-md text-label-md mb-xs">
-                                  <span class="text-on-surface">Backend (Node/Go)</span>
-                                  <span class="text-secondary">35%</span>
-                              </div>
-                              <div class="w-full bg-surface-variant/50 h-2 rounded-full overflow-hidden">
-                                  <div class="bg-secondary h-full rounded-full" style="width: 35%"></div>
-                              </div>
-                          </div>
-                          <div>
-                              <div class="flex justify-between font-label-md text-label-md mb-xs">
-                                  <span class="text-on-surface">DevOps &amp; Cloud</span>
-                                  <span class="text-tertiary">20%</span>
-                              </div>
-                              <div class="w-full bg-surface-variant/50 h-2 rounded-full overflow-hidden">
-                                  <div class="bg-tertiary h-full rounded-full" style="width: 20%"></div>
-                              </div>
-                          </div>
+                      <h3 class="font-headline-md text-headline-md text-on-surface mb-lg">Top Languages</h3>
+                      <div id="dash-tech-focus" class="space-y-sm">
+                          <div class="text-on-surface-variant text-sm">Loading languages...</div>
                       </div>
                   </div>
                   
@@ -134,19 +89,113 @@ export function Dashboard() {
                       <div class="relative w-32 h-32 mb-md">
                           <svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
                               <circle cx="50" cy="50" fill="none" r="45" stroke="rgba(217, 119, 6, 0.2)" stroke-width="8"></circle>
-                              <circle class="transition-all duration-1000 ease-out" cx="50" cy="50" fill="none" r="45" stroke="#d97706" stroke-dasharray="282.7" stroke-dashoffset="42.4" stroke-width="8"></circle>
+                              <circle id="dash-completion-svg" class="transition-all duration-1000 ease-out" cx="50" cy="50" fill="none" r="45" stroke="#d97706" stroke-dasharray="282.7" stroke-dashoffset="282.7" stroke-width="8"></circle>
                           </svg>
                           <div class="absolute inset-0 flex items-center justify-center flex-col">
-                              <span class="font-display-lg text-display-lg text-on-surface text-[24px] leading-none">85%</span>
+                              <span id="dash-completion-text" class="font-display-lg text-display-lg text-on-surface text-[24px] leading-none">0%</span>
                           </div>
                       </div>
-                      <h4 class="font-body-lg text-body-lg text-on-surface font-semibold mb-xs">Next Steps</h4>
-                      <p class="font-body-md text-body-md text-outline mb-md">Add a professional bio to reach 100% completion.</p>
-                      <button class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-lg hover:bg-secondary transition-all w-full shadow-md hover:shadow-lg">Edit Profile</button>
+                      <h4 class="font-body-lg text-body-lg text-on-surface font-semibold mb-xs">Profile Completion</h4>
+                      <p class="font-body-md text-body-md text-outline mb-md">Update your bio and settings.</p>
+                      <button onclick="window.location.hash='#/settings'" class="bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-lg hover:bg-secondary transition-all w-full shadow-md hover:shadow-lg">Edit Profile</button>
                   </div>
               </div>
           </section>
       </div>
     </div>
   `;
+}
+
+export async function initDashboard() {
+    try {
+        const [user, github, projects, skills] = await Promise.all([
+            api.getUser(),
+            api.getGithubData(),
+            api.getProjects(),
+            api.getSkills()
+        ]);
+
+        // Populate Top Nav Avatar
+        const avatarEl = document.getElementById('dash-avatar');
+        if (avatarEl && user.avatar) avatarEl.src = user.avatar;
+        else if (avatarEl && user.name) avatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`;
+
+        // Populate Stats
+        document.getElementById('dash-total-projects').innerText = projects.length || 0;
+        
+        let totalSkills = 0;
+        if (Array.isArray(skills)) {
+            skills.forEach(s => {
+                if (s.items && Array.isArray(s.items)) totalSkills += s.items.length;
+            });
+        }
+        document.getElementById('dash-skills-count').innerText = totalSkills;
+        
+        document.getElementById('dash-repos-count').innerText = github.publicRepos || 0;
+        document.getElementById('dash-followers').innerText = github.followers || 0;
+
+        // Profile Completion Calc
+        let completion = 20; // base
+        if (user.name) completion += 20;
+        if (user.bio) completion += 20;
+        if (user.role) completion += 20;
+        if (user.github_username) completion += 20;
+
+        document.getElementById('dash-completion-text').innerText = `${completion}%`;
+        const circle = document.getElementById('dash-completion-svg');
+        if (circle) {
+            const circumference = 282.7;
+            const offset = circumference - (completion / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // Recent Activity
+        const activityContainer = document.getElementById('dash-recent-activity');
+        if (activityContainer) {
+            if (github.recentActivity && github.recentActivity.length > 0) {
+                const colors = ['primary', 'secondary', 'tertiary'];
+                activityContainer.innerHTML = github.recentActivity.map((act, idx) => {
+                    const color = colors[idx % colors.length];
+                    return `
+                        <div class="relative pl-xl">
+                            <div class="absolute left-0 top-1 w-[24px] h-[24px] rounded-full bg-surface border-2 border-${color} flex items-center justify-center">
+                                <div class="w-2 h-2 bg-${color} rounded-full"></div>
+                            </div>
+                            <div class="font-body-md text-body-md text-on-surface">${act.type.replace('Event', '')} in <span class="text-${color} font-mono text-code-sm bg-${color}/10 px-xs rounded">${act.repo}</span></div>
+                            <div class="font-label-md text-label-md text-outline mt-xs">${act.date}</div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                activityContainer.innerHTML = '<div class="text-on-surface-variant text-sm">No recent activity found.</div>';
+            }
+        }
+
+        // Tech Focus / Top Languages
+        const techContainer = document.getElementById('dash-tech-focus');
+        if (techContainer) {
+            if (github.topLanguages && github.topLanguages.length > 0) {
+                const colors = ['primary', 'secondary', 'tertiary', 'primary'];
+                techContainer.innerHTML = github.topLanguages.map((lang, idx) => {
+                    const color = colors[idx % colors.length];
+                    return `
+                        <div>
+                            <div class="flex justify-between font-label-md text-label-md mb-xs">
+                                <span class="text-on-surface">${lang.name}</span>
+                                <span class="text-${color}">${lang.percentage}%</span>
+                            </div>
+                            <div class="w-full bg-surface-variant/50 h-2 rounded-full overflow-hidden">
+                                <div class="bg-${color} h-full rounded-full" style="width: ${lang.percentage}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                techContainer.innerHTML = '<div class="text-on-surface-variant text-sm">No language data available.</div>';
+            }
+        }
+
+    } catch (e) {
+        console.error("Dashboard Init Error", e);
+    }
 }

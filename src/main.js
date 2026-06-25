@@ -119,6 +119,18 @@ async function router() {
                        import('./views/Settings.js').then(module => {
                            if (module.initSettings) module.initSettings();
                        });
+                   } else if (path === '/projects') {
+                       import('./views/Projects.js').then(module => {
+                           if (module.initProjects) module.initProjects();
+                       });
+                   } else if (path === '/github') {
+                       import('./views/GitHubProfile.js').then(module => {
+                           if (module.initGitHub) module.initGitHub();
+                       });
+                   } else if (path === '/preview') {
+                       import('./views/PortfolioPreview.js').then(module => {
+                           if (module.initPreview) module.initPreview();
+                       });
                    }
                 }
                 

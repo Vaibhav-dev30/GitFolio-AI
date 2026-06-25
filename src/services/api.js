@@ -189,7 +189,8 @@ export const api = {
         publicRepos: user.public_repos || 0,
         contributionsLastYear: 0, // GitHub API doesn't expose this directly without GraphQL
         topLanguages: topLanguages.length > 0 ? topLanguages : mockGithubData.topLanguages,
-        recentActivity: recentActivity.length > 0 ? recentActivity : mockGithubData.recentActivity
+        recentActivity: recentActivity.length > 0 ? recentActivity : mockGithubData.recentActivity,
+        repositories: Array.isArray(repos) ? repos : []
       };
     } catch (err) {
       console.error('Failed to fetch real GitHub data, falling back to mock.', err);
